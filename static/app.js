@@ -1,3 +1,23 @@
+// For PUBLIC APIs (login, register)
+function publicHeaders() {
+  return {
+    "Content-Type": "application/json"
+  };
+}
+
+// For PROTECTED APIs
+function authHeaders() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    window.location.href = "/login";
+    throw new Error("No token");
+  }
+  return {
+    "Authorization": "Bearer " + token,
+    "Content-Type": "application/json"
+  };
+}
+
 async function login() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -5,14 +25,8 @@ async function login() {
 
   const res = await fetch("/auth/login", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      email: email,
-      password: password,
-      role: role
-    })
+    headers: publicHeaders(),
+    body: JSON.stringify({ email, password, role })
   });
 
   const data = await res.json();
@@ -22,19 +36,13 @@ async function login() {
     return;
   }
 
-  // SAVE TOKEN
   localStorage.setItem("token", data.access_token);
   localStorage.setItem("role", data.role);
 
-  // REDIRECT
-  if (data.role === "teacher") {
-    window.location.href = "/teacher/dashboard";
-  } else {
-    window.location.href = "/student/dashboard";
-  }
-}
-function getToken() {
-  return localStorage.getItem("token");
+  window.location.href =
+    data.role === "teacher"
+      ? "/teacher/dashboard"
+      : "/student/dashboard";
 }
 
 async function createCourse() {
@@ -42,10 +50,7 @@ async function createCourse() {
 
   const res = await fetch("/teacher/courses", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + getToken()
-    },
+    headers: authHeaders(),
     body: JSON.stringify({ title })
   });
 
@@ -63,9 +68,7 @@ async function uploadDocument() {
 
   const res = await fetch("/documents/upload", {
     method: "POST",
-    headers: {
-      "Authorization": "Bearer " + getToken()
-    },
+    headers: authHeaders(),
     body: formData
   });
 
@@ -77,9 +80,7 @@ async function enrollCourse() {
 
   const res = await fetch(`/student/courses/${courseId}/enroll`, {
     method: "POST",
-    headers: {
-      "Authorization": "Bearer " + localStorage.getItem("token")
-    }
+    headers: authHeaders()
   });
 
   const data = await res.json();
@@ -88,9 +89,7 @@ async function enrollCourse() {
 
 async function loadMyCourses() {
   const res = await fetch("/student/courses", {
-    headers: {
-      "Authorization": "Bearer " + localStorage.getItem("token")
-    }
+    headers: authHeaders()
   });
 
   const courses = await res.json();
@@ -118,10 +117,7 @@ async function askQuestion() {
 
   const res = await fetch("/chat", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + localStorage.getItem("token")
-    },
+    headers: authHeaders(),
     body: JSON.stringify({ question })
   });
 
@@ -148,9 +144,7 @@ async function register() {
 
   const res = await fetch(endpoint, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: publicHeaders(),
     body: JSON.stringify({ name, email, password })
   });
 
@@ -158,8 +152,7 @@ async function register() {
   document.getElementById("msg").innerText = data.msg;
 
   if (res.ok) {
-    setTimeout(() => {
-      window.location.href = "/login";
-    }, 1500);
+    setTimeout(() => window.location.href = "/login", 1500);
   }
 }
+
