@@ -8,15 +8,19 @@ function publicHeaders() {
 // For PROTECTED APIs
 function authHeaders() {
   const token = localStorage.getItem("token");
+
   if (!token) {
+    localStorage.clear();
     window.location.href = "/login";
-    throw new Error("No token");
+    return {};   // prevent JS crash
   }
+
   return {
     "Authorization": "Bearer " + token,
     "Content-Type": "application/json"
   };
 }
+
 
 async function login() {
   const email = document.getElementById("email").value;
@@ -66,15 +70,20 @@ async function uploadDocument() {
   formData.append("course_id", courseId);
   formData.append("file", fileInput.files[0]);
 
+  const token = localStorage.getItem("token");
+
   const res = await fetch("/documents/upload", {
     method: "POST",
-    headers: authHeaders(),
+    headers: {
+      "Authorization": "Bearer " + token   
+    },
     body: formData
   });
 
   const data = await res.json();
   document.getElementById("docMsg").innerText = data.msg;
 }
+
 async function enrollCourse() {
   const courseId = document.getElementById("enrollCourseId").value;
 

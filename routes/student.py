@@ -3,17 +3,19 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from utils.auth import role_required
 from models import Course, Student
 from extensions import db
-student_bp = Blueprint("student", __name__, url_prefix="/student")
 
-@student_bp.route("/dashboard")
+student_bp = Blueprint("student", __name__, url_prefix="/student")
+@student_bp.route("/me", methods=["GET"])
 @jwt_required()
 @role_required("student")
-def dashboard():
+def me():
     user = get_jwt_identity()
-    return {
+    return jsonify({
         "msg": "Welcome Student",
         "student_id": user["id"]
-    }
+    }), 200
+
+
 @student_bp.route("/courses/<int:course_id>/enroll", methods=["POST"])
 @jwt_required()
 @role_required("student")
@@ -43,12 +45,10 @@ def enrolled_courses():
     identity = get_jwt_identity()
     student = Student.query.get(identity["id"])
 
-    result = []
-    for c in student.courses:
-        result.append({
+    return jsonify([
+        {
             "id": c.id,
             "title": c.title,
             "description": c.description
-        })
-
-    return jsonify(result), 200
+        } for c in student.courses
+    ]), 200
