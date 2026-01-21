@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Dashboard</title>
+</head>
+<body>
+  <h2>Student Dashboard</h2>
+
+  <h3>Enroll in Course</h3>
+  <input id="enrollCourseId" placeholder="Course ID" />
+  <br /><br />
+  <button onclick="enrollCourse()">Enroll</button>
+
+  <p id="enrollMsg"></p>
+
+  <hr />
+
+  <h3>My Courses</h3>
+  <button onclick="loadMyCourses()">Load Enrolled Courses</button>
+  <ul id="courseList"></ul>
+
+  <hr />
+
+  <button onclick="goToChat()">Go to AI Chat</button>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

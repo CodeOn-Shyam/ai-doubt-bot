@@ -8,3 +8,4 @@ python-docx
 gunicorn
 flask_sqlalchemy
 flask-jwt-extended
+google-genai

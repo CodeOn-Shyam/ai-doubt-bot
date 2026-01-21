@@ -8,8 +8,10 @@ def role_required(role):
         def wrapper(*args, **kwargs):
             verify_jwt_in_request()
             identity = get_jwt_identity()
-            if identity["role"]!=role:
+
+            if not identity or identity.get("role") != role:
                 return jsonify({"msg": "Access forbidden: incorrect role"}), 403
+
             return fn(*args, **kwargs)
         return wrapper
     return decorator

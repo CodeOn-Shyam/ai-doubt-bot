@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Teacher Dashboard</title>
+</head>
+<body>
+  <h2>Teacher Dashboard</h2>
+
+  <h3>Create Course</h3>
+  <input id="courseTitle" placeholder="Course Title" />
+  <br /><br />
+  <button onclick="createCourse()">Create Course</button>
+
+  <p id="courseMsg"></p>
+
+  <hr />
+
+  <h3>Upload Document</h3>
+  <input id="courseId" placeholder="Course ID" />
+  <br /><br />
+  <input type="file" id="docFile" />
+  <br /><br />
+  <button onclick="uploadDocument()">Upload</button>
+
+  <p id="docMsg"></p>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

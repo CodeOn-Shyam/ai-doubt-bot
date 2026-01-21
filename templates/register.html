@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+</head>
+<body>
+  <h2>Register</h2>
+
+  <label>Name</label><br />
+  <input id="name" type="text" /><br /><br />
+
+  <label>Email</label><br />
+  <input id="email" type="email" /><br /><br />
+
+  <label>Password</label><br />
+  <input id="password" type="password" /><br /><br />
+
+  <label>Role</label><br />
+  <select id="role">
+    <option value="student">Student</option>
+    <option value="teacher">Teacher</option>
+  </select><br /><br />
+
+  <button onclick="register()">Register</button>
+
+  <p id="msg"></p>
+
+  <br />
+  <a href="/login">Already have an account? Login</a>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

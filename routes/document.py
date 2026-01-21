@@ -5,6 +5,8 @@ from utils.auth import role_required
 from extensions import db
 from models.document import Document
 from models.course import Course
+from ai.loader import load_pdf, load_docx
+from ai.rag import add_document_chunks
 
 document_bp = Blueprint("document", __name__, url_prefix="/documents")
 
