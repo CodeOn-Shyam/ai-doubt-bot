@@ -7,7 +7,7 @@ class Teacher(db.Model):
     password = db.Column(db.String(100), nullable=False)
 
     courses = db.relationship("Course", backref = "teacher", lazy=True)
-    doucuments = db.relationship("Doxuments", backref = "teacher",lazy=True)
+    doucuments = db.relationship("Document", backref = "teacher",lazy=True)
 
     def __repr__(self):
         return f"<Teacher {self.email}>"
