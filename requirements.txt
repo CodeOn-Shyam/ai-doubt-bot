@@ -1,11 +1,11 @@
 flask
+flask-sqlalchemy
+flask-jwt-extended
+python-dotenv
+werkzeug
 flask-cors
-google-generativeai
+google-genai
 faiss-cpu
 numpy
 pymupdf
 python-docx
-gunicorn
-flask_sqlalchemy
-flask-jwt-extended
-google-genai
