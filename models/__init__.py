@@ -1,7 +1,5 @@
-from extensions import db
-
-student_course = db.Table(
-    "student_course",
-    db.Column("student_id", db.Integer, db.ForeignKey("student.id")),
-    db.Column("course_id", db.Integer, db.ForeignKey("course.id"))
-)
+from models.teacher import Teacher
+from models.student import Student
+from models.course import Course
+from models.document import Document
+from models.associations import student_course

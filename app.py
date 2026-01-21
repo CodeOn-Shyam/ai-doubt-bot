@@ -10,10 +10,7 @@ def create_app():
     db.init_app(app)
 
     with app.app_context():
-        from models.teacher import Teacher
-        from models.student import Student
-        from models.course import Course
-        from models.document import Document
+        import models  # registers everything
         db.create_all()
 
     @app.route("/")
