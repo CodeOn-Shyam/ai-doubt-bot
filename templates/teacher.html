@@ -1,29 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>Teacher Dashboard</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="/static/navbar.css" />
 </head>
-<body>
-  <h2>Teacher Dashboard</h2>
+<body class="bg-gray-100 min-h-screen">
 
-  <h3>Create Course</h3>
-  <input id="courseTitle" placeholder="Course Title" />
-  <br /><br />
-  <button onclick="createCourse()">Create Course</button>
+  {% include "components/navbar.html" %}
 
-  <p id="courseMsg"></p>
+  <div class="max-w-5xl mx-auto px-4 py-8">
 
-  <hr />
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">
+      Teacher Dashboard
+    </h1>
 
-  <h3>Upload Document</h3>
-  <input id="courseId" placeholder="Course ID" />
-  <br /><br />
-  <input type="file" id="docFile" />
-  <br /><br />
-  <button onclick="uploadDocument()">Upload</button>
+    <!-- ================= CREATE COURSE ================= -->
+    <div class="bg-white rounded-xl shadow p-6 mb-8">
+      <h2 class="text-xl font-semibold mb-4">Create New Course</h2>
 
-  <p id="docMsg"></p>
+      <div class="space-y-4">
+        <input
+          id="courseTitle"
+          type="text"
+          placeholder="Course Title"
+          class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
 
-  <script src="/static/app.js"></script>
+        <input
+          id="courseDescription"
+          type="text"
+          placeholder="Course Description"
+          class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+
+        <button
+          onclick="createCourse()"
+          class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+        >
+          Create Course
+        </button>
+
+        <p id="courseMsg" class="text-sm text-green-600"></p>
+      </div>
+    </div>
+
+    <!-- ================= MY COURSES ================= -->
+    <div class="bg-white rounded-xl shadow p-6 mb-8">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold">My Courses</h2>
+        <button
+          onclick="loadMyCourses()"
+          class="text-sm bg-gray-200 px-4 py-1 rounded hover:bg-gray-300"
+        >
+          Refresh
+        </button>
+      </div>
+
+      <ul id="courseList" class="space-y-4">
+        <!-- Courses injected here -->
+      </ul>
+    </div>
+
+    <!-- ================= UPLOAD DOCUMENT ================= -->
+    <div class="bg-white rounded-xl shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">Upload Course Material</h2>
+
+      <div class="space-y-4">
+        <input
+          id="uploadCourseId"
+          type="number"
+          placeholder="Course ID"
+          class="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+
+        <input
+          type="file"
+          id="docFile"
+          class="w-full border rounded-lg px-4 py-2"
+        />
+
+        <button
+          onclick="uploadDocument()"
+          class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition"
+        >
+          Upload Document
+        </button>
+
+        <p id="docMsg" class="text-sm mt-2"></p>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="/static/common.js"></script>
+  <script src="/static/teacher.js"></script>
 </body>
 </html>

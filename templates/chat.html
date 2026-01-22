@@ -1,29 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>AI Doubt Chat</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <h2>AI Doubt Chat</h2>
 
-  <textarea
-    id="question"
-    placeholder="Ask your doubt here..."
-    rows="4"
-    cols="60"
-  ></textarea>
+<body class="bg-gray-100 min-h-screen flex flex-col">
 
-  <br /><br />
-  <button onclick="askQuestion()">Ask</button>
+  <!-- Header -->
+  <div class="bg-indigo-600 text-white px-6 py-4 shadow">
+    <h1 class="text-xl font-semibold">AI Doubt Assistant</h1>
+    <p class="text-sm text-indigo-200">
+      Ask questions from your course material
+    </p>
+  </div>
 
-  <hr />
+  <!-- Chat Window -->
+  <div
+    id="chatWindow"
+    class="flex-1 overflow-y-auto p-6 space-y-4"
+  >
+    <!-- Messages will be injected here -->
+  </div>
 
-  <h3>Answer</h3>
-  <p id="answer"></p>
+  <!-- Input Area -->
+  <div class="bg-white p-4 border-t flex gap-3">
+    <input
+      id="questionInput"
+      type="text"
+      placeholder="Type your doubt here..."
+      class="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      onkeydown="if(event.key==='Enter'){askQuestion()}"
+    />
 
-  <br />
-  <button onclick="goBack()">Back to Dashboard</button>
+    <button
+      onclick="askQuestion()"
+      class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition"
+    >
+      Send
+    </button>
+  </div>
 
-  <script src="/static/app.js"></script>
+  <!-- Scripts -->
+  <script src="/static/common.js"></script>
+  <script src="/static/chat.js"></script>
 </body>
 </html>

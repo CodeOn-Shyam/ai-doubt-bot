@@ -1,28 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>Student Dashboard</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/static/navbar.css" />
 </head>
-<body>
-  <h2>Student Dashboard</h2>
 
-  <h3>Enroll in Course</h3>
-  <input id="enrollCourseId" placeholder="Course ID" />
-  <br /><br />
-  <button onclick="enrollCourse()">Enroll</button>
+<body class="bg-gray-100 min-h-screen">
 
-  <p id="enrollMsg"></p>
+  {% include "components/navbar.html" %}
 
-  <hr />
+  <div class="max-w-5xl mx-auto px-4 py-8">
 
-  <h3>My Courses</h3>
-  <button onclick="loadMyCourses()">Load Enrolled Courses</button>
-  <ul id="courseList"></ul>
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">
+      Student Dashboard
+    </h1>
 
-  <hr />
+    <!-- ================= AVAILABLE COURSES ================= -->
+    <div class="bg-white rounded-xl shadow p-6 mb-8">
+      <h2 class="text-xl font-semibold mb-4">
+        Available Courses
+      </h2>
 
-  <button onclick="goToChat()">Go to AI Chat</button>
+      <ul id="allCourses" class="space-y-4"></ul>
+      <p id="enrollMsg" class="text-sm mt-3"></p>
+    </div>
 
-  <script src="/static/app.js"></script>
+    <!-- ================= ENROLLED COURSES ================= -->
+    <div class="bg-white rounded-xl shadow p-6">
+      <h2 class="text-xl font-semibold mb-4">
+        My Enrolled Courses
+      </h2>
+
+      <ul id="myCourses" class="space-y-4"></ul>
+    </div>
+
+  </div>
+
+  <script src="/static/common.js"></script>
+  <script src="/static/student.js"></script>
 </body>
 </html>

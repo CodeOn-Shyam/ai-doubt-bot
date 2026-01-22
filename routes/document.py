@@ -18,12 +18,12 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 def allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
 @document_bp.route("/upload", methods=["POST"])
 @jwt_required()
 @role_required("teacher")
 def upload_document():
-    identity = get_jwt_identity()
-    teacher_id = identity["id"]
+    teacher_id = int(get_jwt_identity())   # ✅ FIXED
 
     file = request.files.get("file")
     course_id = request.form.get("course_id")
@@ -51,6 +51,10 @@ def upload_document():
 
     db.session.add(document)
     db.session.commit()
+
+    # (Optional next step: process document for RAG)
+    # chunks = load_pdf(filepath) or load_docx(filepath)
+    # add_document_chunks(chunks, course_id)
 
     return jsonify({
         "msg": "Document uploaded successfully",

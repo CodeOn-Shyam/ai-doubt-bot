@@ -5,23 +5,28 @@ from models import Course, Student
 from extensions import db
 
 student_bp = Blueprint("student", __name__, url_prefix="/student")
-@student_bp.route("/me", methods=["GET"])
+
+
+@student_bp.route("/courses/all", methods=["GET"])
 @jwt_required()
 @role_required("student")
-def me():
-    user = get_jwt_identity()
-    return jsonify({
-        "msg": "Welcome Student",
-        "student_id": user["id"]
-    }), 200
+def all_courses():
+    courses = Course.query.all()
+    return jsonify([
+        {
+            "id": c.id,
+            "title": c.title,
+            "description": c.description
+        }
+        for c in courses
+    ]), 200
 
 
 @student_bp.route("/courses/<int:course_id>/enroll", methods=["POST"])
 @jwt_required()
 @role_required("student")
 def enroll_course(course_id):
-    identity = get_jwt_identity()
-    student_id = identity["id"]
+    student_id = int(get_jwt_identity())  # ✅ FIX
 
     student = Student.query.get(student_id)
     course = Course.query.get(course_id)
@@ -42,13 +47,14 @@ def enroll_course(course_id):
 @jwt_required()
 @role_required("student")
 def enrolled_courses():
-    identity = get_jwt_identity()
-    student = Student.query.get(identity["id"])
+    student_id = int(get_jwt_identity())  # ✅ FIX
+    student = Student.query.get(student_id)
 
     return jsonify([
         {
             "id": c.id,
             "title": c.title,
             "description": c.description
-        } for c in student.courses
+        }
+        for c in student.courses
     ]), 200

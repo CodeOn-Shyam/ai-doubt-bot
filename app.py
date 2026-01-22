@@ -41,6 +41,7 @@ def create_app():
     @app.route("/teacher/dashboard")
     def teacher_dashboard():
         return render_template("teacher.html")
+
     @app.route("/student/dashboard")
     def student_dashboard():
         return render_template("student.html")

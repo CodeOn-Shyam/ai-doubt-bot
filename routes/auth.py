@@ -45,12 +45,16 @@ def register_student():
 
 @auth_bp.route("/login", methods=["POST"])
 def login():
-    data = request.json
+    data = request.get_json()
+    if not data:
+        return jsonify({"msg": "Invalid JSON body"}), 400
+
+    if not all(k in data for k in ("email", "password", "role")):
+        return jsonify({"msg": "Missing fields"}), 400
+
     email = data["email"]
     password = data["password"]
     role = data["role"]
-
-    user = None
 
     if role == "teacher":
         user = Teacher.query.filter_by(email=email).first()
@@ -63,10 +67,8 @@ def login():
         return jsonify({"msg": "Invalid credentials"}), 401
 
     token = create_access_token(
-        identity={
-            "id": user.id,
-            "role": role
-        }
+        identity=str(user.id),
+        additional_claims={"role": role}
     )
 
     return jsonify({

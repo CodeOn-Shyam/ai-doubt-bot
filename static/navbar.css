@@ -1,0 +1,25 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222;
+  padding: 12px 20px;
+  color: white;
+}
+
+.brand {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.navbar a {
+  color: white;
+  margin-left: 15px;
+  text-decoration: none;
+}
+
+.navbar button {
+  margin-left: 15px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
